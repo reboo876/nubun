@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial', cursive, sans-serif;
+            overflow: hidden;
+            max-width: 430px;
+            margin: 0 auto;
+            height: 100vh;
+        }
+
+        .page {
+            width: 100%;
+            height: 100vh;
+            display: none;
+            position: relative;
+            background: linear-gradient(135deg, #FFE5EC 0%, #FFC4D6 100%);
+            overflow: hidden;
+        }
+
+        .page.active {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        /* Ornamen Bunga */
+        .flower {
+            position: absolute;
+            font-size: 2rem;
+            -webkit-animation: float 3s ease-in-out infinite;
+            animation: float 3s ease-in-out infinite;
+            opacity: 0.6;
+        }
+
+        .flower:nth-child(1) { top: 5%; left: 5%; -webkit-animation-delay: 0s; animation-delay: 0s; }
+        .flower:nth-child(2) { top: 10%; right: 10%; -webkit-animation-delay: 0.5s; animation-delay: 0.5s; }
+        .flower:nth-child(3) { bottom: 15%; left: 8%; -webkit-animation-delay: 1s; animation-delay: 1s; }
+        .flower:nth-child(4) { bottom: 10%; right: 5%; -webkit-animation-delay: 1.5s; animation-delay: 1.5s; }
+        .flower:nth-child(5) { top: 50%; left: 2%; -webkit-animation-delay: 2s; animation-delay: 2s; }
+        .flower:nth-child(6) { top: 50%; right: 2%; -webkit-animation-delay: 2.5s; animation-delay: 2.5s; }
+
+        @-webkit-keyframes float {
+            0%, 100% { -webkit-transform: translateY(0px) rotate(0deg); transform: translateY(0px) rotate(0deg); }
+            50% { -webkit-transform: translateY(-20px) rotate(10deg); transform: translateY(-20px) rotate(10deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { -webkit-transform: translateY(0px) rotate(0deg); transform: translateY(0px) rotate(0deg); }
+            50% { -webkit-transform: translateY(-20px) rotate(10deg); transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* Halaman 1 - Game */
+        .title {
+            font-size: 2.5rem;
+            color: #FF1493;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            -webkit-animation: bounce 1s ease-in-out infinite;
+            animation: bounce 1s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        @-webkit-keyframes bounce {
+            0%, 100% { -webkit-transform: translateY(0); transform: translateY(0); }
+            50% { -webkit-transform: translateY(-10px); transform: translateY(-10px); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { -webkit-transform: translateY(0); transform: translateY(0); }
+            50% { -webkit-transform: translateY(-10px); transform: translateY(-10px); }
+        }
+
+        .game-area {
+            width: 90%;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            position: relative;
+            border: 3px solid #FFB6C1;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        .cat {
+            width: 60px;
+            height: 60px;
+            font-size: 3rem;
+            position: absolute;
+            cursor: pointer;
+            -webkit-transition: all 0.3s;
+            transition: all 0.3s;
+            -webkit-animation: wiggle 0.5s ease-in-out infinite;
+            animation: wiggle 0.5s ease-in-out infinite;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .cat:hover {
+            -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+        }
+
+        @-webkit-keyframes wiggle {
+            0%, 100% { -webkit-transform: rotate(-5deg); transform: rotate(-5deg); }
+            50% { -webkit-transform: rotate(5deg); transform: rotate(5deg); }
+        }
+
+        @keyframes wiggle {
+            0%, 100% { -webkit-transform: rotate(-5deg); transform: rotate(-5deg); }
+            50% { -webkit-transform: rotate(5deg); transform: rotate(5deg); }
+        }
+
+        .score {
+            font-size: 1.5rem;
+            color: #FF1493;
+            margin-top: 20px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        /* Halaman 2 - Kue */
+        .cake-container {
+            position: relative;
+            z-index: 10;
+        }
+
+        .cake {
+            font-size: 8rem;
+            margin-bottom: 20px;
+            -webkit-animation: cake-appear 1s ease-out;
+            animation: cake-appear 1s ease-out;
+            text-align: center;
+        }
+
+        @-webkit-keyframes cake-appear {
+            0% { -webkit-transform: scale(0) rotate(-180deg); transform: scale(0) rotate(-180deg); opacity: 0; }
+            100% { -webkit-transform: scale(1) rotate(0deg); transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        @keyframes cake-appear {
+            0% { -webkit-transform: scale(0) rotate(-180deg); transform: scale(0) rotate(-180deg); opacity: 0; }
+            100% { -webkit-transform: scale(1) rotate(0deg); transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .candles {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .candle {
+            cursor: pointer;
+            font-size: 3rem;
+            -webkit-transition: all 0.3s;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 100;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .candle.lit {
+            -webkit-animation: flicker 0.5s ease-in-out infinite;
+            animation: flicker 0.5s ease-in-out infinite;
+        }
+
+        @-webkit-keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .candle:hover {
+            -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+        }
+
+        .instruction {
+            font-size: 1.2rem;
+            color: #FF1493;
+            margin-top: 80px;
+            text-align: center;
+            -webkit-animation: pulse 2s ease-in-out infinite;
+            animation: pulse 2s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        @-webkit-keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .applause {
+            font-size: 3rem;
+            margin-top: 20px;
+            display: none;
+            -webkit-animation: clap 0.5s ease-in-out infinite;
+            animation: clap 0.5s ease-in-out infinite;
+        }
+
+        @-webkit-keyframes clap {
+            0%, 100% { -webkit-transform: scale(1); transform: scale(1); }
+            50% { -webkit-transform: scale(1.2); transform: scale(1.2); }
+        }
+
+        @keyframes clap {
+            0%, 100% { -webkit-transform: scale(1); transform: scale(1); }
+            50% { -webkit-transform: scale(1.2); transform: scale(1.2); }
+        }
+
+        /* Halaman 3 - Pesan */
+        .message-container {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 40px;
+            border-radius: 30px;
+            max-width: 85%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 3px solid #FFB6C1;
+            z-index: 10;
+        }
+
+        .message {
+            font-size: 1.3rem;
+            color: #FF1493;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            -webkit-animation: fade-in 2s ease-in;
+            animation: fade-in 2s ease-in;
+        }
+
+        @-webkit-keyframes fade-in {
+            0% { opacity: 0; -webkit-transform: translateY(20px); transform: translateY(20px); }
+            100% { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }
+        }
+
+        @keyframes fade-in {
+            0% { opacity: 0; -webkit-transform: translateY(20px); transform: translateY(20px); }
+            100% { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }
+        }
+
+        .cat-emoji {
+            font-size: 4rem;
+            -webkit-animation: rotate-cat 2s ease-in-out infinite;
+            animation: rotate-cat 2s ease-in-out infinite;
+        }
+
+        @-webkit-keyframes rotate-cat {
+            0%, 100% { -webkit-transform: rotate(-10deg); transform: rotate(-10deg); }
+            50% { -webkit-transform: rotate(10deg); transform: rotate(10deg); }
+        }
+
+        @keyframes rotate-cat {
+            0%, 100% { -webkit-transform: rotate(-10deg); transform: rotate(-10deg); }
+            50% { -webkit-transform: rotate(10deg); transform: rotate(10deg); }
+        }
+
+        .hearts {
+            font-size: 2rem;
+            margin-top: 15px;
+            -webkit-animation: heart-beat 1.5s ease-in-out infinite;
+            animation: heart-beat 1.5s ease-in-out infinite;
+        }
+
+        @-webkit-keyframes heart-beat {
+            0%, 100% { -webkit-transform: scale(1); transform: scale(1); }
+            50% { -webkit-transform: scale(1.1); transform: scale(1.1); }
+        }
+
+        @keyframes heart-beat {
+            0%, 100% { -webkit-transform: scale(1); transform: scale(1); }
+            50% { -webkit-transform: scale(1.1); transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Halaman 1: Mini Game -->
+    <div class="page active" id="page1">
+        <div class="flower">🌸</div>
+        <div class="flower">🌺</div>
+        <div class="flower">🌼</div>
+        <div class="flower">🌻</div>
+        <div class="flower">🌷</div>
+        <div class="flower">🌹</div>
+        
+        <h1 class="title">Tangkap Kucingnya! 🐱</h1>
+        <div class="game-area" id="gameArea"></div>
+        <div class="score">Skor: <span id="score">0</span> / 10</div>
+    </div>
+
+    <!-- Halaman 2: Kue Ulang Tahun -->
+    <div class="page" id="page2">
+        <div class="flower">🌸</div>
+        <div class="flower">🌺</div>
+        <div class="flower">🌼</div>
+        <div class="flower">🌻</div>
+        <div class="flower">🌷</div>
+        <div class="flower">🌹</div>
+        
+        <div class="cake-container">
+            <div class="cake">🎂</div>
+            <div class="candles" id="candles">
+                <div class="candle lit" data-id="1">🕯️</div>
+                <div class="candle lit" data-id="2">🕯️</div>
+                <div class="candle lit" data-id="3">🕯️</div>
+            </div>
+        </div>
+        <p class="instruction">Klik lilinnya untuk meniup! 💨</p>
+        <div class="applause" id="applause">👏👏👏</div>
+    </div>
+
+    <!-- Halaman 3: Ucapan -->
+    <div class="page" id="page3">
+        <div class="flower">🌸</div>
+        <div class="flower">🌺</div>
+        <div class="flower">🌼</div>
+        <div class="flower">🌻</div>
+        <div class="flower">🌷</div>
+        <div class="flower">🌹</div>
+        
+        <div class="message-container">
+            <div class="cat-emoji">😺</div>
+            <p class="message">
+                Selamat ulang tahun ya bungaku,<br>
+                ini kado dari aku semoga kamu suka,<br>
+                sehat dan bahagia selalu ya disana 🌸
+            </p>
+            <div class="hearts">💖 💕 💗</div>
+        </div>
+    </div>
+
+    <script>
+        // Game Logic - Halaman 1
+        var score = 0;
+        var gameArea = document.getElementById('gameArea');
+        var scoreDisplay = document.getElementById('score');
+        var gameActive = true;
+
+        function createCat() {
+            if (!gameActive || score >= 10) return;
+
+            var cat = document.createElement('div');
+            cat.className = 'cat';
+            cat.textContent = '🐱';
+            
+            var maxX = gameArea.clientWidth - 60;
+            var maxY = gameArea.clientHeight - 60;
+            
+            cat.style.left = Math.random() * maxX + 'px';
+            cat.style.top = Math.random() * maxY + 'px';
+            
+            cat.addEventListener('click', function() {
+                score++;
+                scoreDisplay.textContent = score;
+                if (cat.parentElement) {
+                    cat.parentElement.removeChild(cat);
+                }
+                
+                if (score >= 10) {
+                    gameActive = false;
+                    setTimeout(function() {
+                        document.getElementById('page1').classList.remove('active');
+                        document.getElementById('page2').classList.add('active');
+                    }, 500);
+                } else {
+                    createCat();
+                }
+            });
+            
+            gameArea.appendChild(cat);
+            
+            setTimeout(function() {
+                if (cat.parentElement && score < 10) {
+                    cat.parentElement.removeChild(cat);
+                    createCat();
+                }
+            }, 1500);
+        }
+
+        // Start game
+        for (var i = 0; i < 3; i++) {
+            (function(index) {
+                setTimeout(function() {
+                    createCat();
+                }, index * 200);
+            })(i);
+        }
+
+        // Candle Logic - Halaman 2
+        var litCandles = 3;
+        var candles = document.querySelectorAll('.candle');
+        var applause = document.getElementById('applause');
+        var audioContext = null;
+        var songPlaying = false;
+
+        // Inisialisasi AudioContext dengan fallback
+        try {
+            var AudioContextClass = window.AudioContext || window.webkitAudioContext || null;
+            if (AudioContextClass) {
+                audioContext = new AudioContextClass();
+            }
+        } catch (e) {
+            console.log('Web Audio API tidak tersedia');
+        }
+
+        // Piano frequencies untuk Happy Birthday
+        var notes = [
+            {freq: 262, duration: 0.25}, {freq: 262, duration: 0.25}, {freq: 294, duration: 0.5}, {freq: 262, duration: 0.5}, {freq: 349, duration: 0.5}, {freq: 330, duration: 1},
+            {freq: 262, duration: 0.25}, {freq: 262, duration: 0.25}, {freq: 294, duration: 0.5}, {freq: 262, duration: 0.5}, {freq: 392, duration: 0.5}, {freq: 349, duration: 1},
+            {freq: 262, duration: 0.25}, {freq: 262, duration: 0.25}, {freq: 523, duration: 0.5}, {freq: 440, duration: 0.5}, {freq: 349, duration: 0.5}, {freq: 330, duration: 0.5}, {freq: 294, duration: 0.5},
+            {freq: 466, duration: 0.25}, {freq: 466, duration: 0.25}, {freq: 440, duration: 0.5}, {freq: 349, duration: 0.5}, {freq: 392, duration: 0.5}, {freq: 349, duration: 1}
+        ];
+
+        function playNote(frequency, duration, startTime) {
+            if (!audioContext) return;
+
+            try {
+                var osc = audioContext.createOscillator();
+                var gainNode = audioContext.createGain();
+                
+                osc.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                osc.frequency.value = frequency;
+                osc.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0, startTime);
+                gainNode.gain.linearRampToValueAtTime(0.1, startTime + 0.02);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+                
+                osc.start(startTime);
+                osc.stop(startTime + duration);
+            } catch (e) {
+                console.log('Error playing note');
+            }
+        }
+
+        function playSong() {
+            if (songPlaying) return;
+            songPlaying = true;
+            
+            var delay = 8000; // Default delay jika audio tidak bisa diputar
+            
+            if (audioContext) {
+                try {
+                    // Resume audio context jika suspended (diperlukan di beberapa browser)
+                    if (audioContext.state === 'suspended') {
+                        audioContext.resume();
+                    }
+                    
+                    var currentTime = audioContext.currentTime;
+                    for (var i = 0; i < notes.length; i++) {
+                        playNote(notes[i].freq, notes[i].duration, currentTime);
+                        currentTime += notes[i].duration;
+                    }
+                    delay = currentTime * 1000 + 1000;
+                } catch (e) {
+                    console.log('Error playing song');
+                }
+            }
+
+            setTimeout(function() {
+                document.getElementById('page2').classList.remove('active');
+                document.getElementById('page3').classList.add('active');
+            }, delay);
+        }
+
+        // Event listener untuk setiap lilin
+        for (var i = 0; i < candles.length; i++) {
+            candles[i].addEventListener('click', function() {
+                if (this.classList.contains('lit')) {
+                    this.classList.remove('lit');
+                    this.style.opacity = '0.3';
+                    litCandles--;
+                    
+                    if (litCandles === 0) {
+                        applause.style.display = 'block';
+                        setTimeout(function() {
+                            playSong();
+                        }, 500);
+                    }
+                }
+            });
+        }
+
+        // Tambahan untuk touch events di mobile
+        if ('ontouchstart' in window) {
+            for (var i = 0; i < candles.length; i++) {
+                candles[i].addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    this.click();
+                });
+            }
+        }
+    </script>
+</body>
+</html>
